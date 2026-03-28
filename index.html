@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="vpIS4AMFZjl61vwjnsuaFHgQU1PLEHsVEFNRPxsPsJs" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgeCalculator Pro — Discover Your Life in Numbers</title>
+<meta name="description" content="Calculate your exact age in years, months, days, hours and minutes. Find fun facts about your life, compare ages, and share your results. Free age calculator.">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --bg2: #12121a;
+  --bg3: #1a1a26;
+  --surface: rgba(255,255,255,0.05);
+  --surface2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.1);
+  --border2: rgba(255,255,255,0.18);
+  --violet: #8b5cf6;
+  --violet2: #a78bfa;
+  --violet3: #c4b5fd;
+  --pink: #ec4899;
+  --pink2: #f472b6;
+  --cyan: #06b6d4;
+  --cyan2: #22d3ee;
+  --amber: #f59e0b;
+  --green: #10b981;
+  --text: #f8fafc;
+  --text2: #94a3b8;
+  --text3: #475569;
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg: 0 12px 50px rgba(0,0,0,0.6);
+  --shadow-violet: 0 0 40px rgba(139,92,246,0.3);
+  --radius: 16px;
+  --radius-lg: 24px;
+  --font: 'Cabinet Grotesk', sans-serif;
+  --font-display: 'Clash Display', sans-serif;
+  --grad: linear-gradient(135deg, var(--violet), var(--pink));
+  --grad2: linear-gradient(135deg, var(--cyan), var(--violet));
+}
+
+[data-theme="light"] {
+  --bg: #f8f7ff;
+  --bg2: #ede9fe;
+  --bg3: #e8e3fa;
+  --surface: rgba(139,92,246,0.06);
+  --surface2: rgba(139,92,246,0.1);
+  --border: rgba(139,92,246,0.15);
+  --border2: rgba(139,92,246,0.25);
+  --text: #1e1b4b;
+  --text2: #4c1d95;
+  --text3: #7c3aed;
+  --shadow: 0 4px 24px rgba(139,92,246,0.12);
+  --shadow-lg: 0 12px 50px rgba(139,92,246,0.2);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Animated gradient bg */
+.bg-gradient {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(139,92,246,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(236,72,153,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.06) 0%, transparent 60%);
+}
+
+.app { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; padding: 0 20px 100px; }
+
+/* HEADER */
+header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 0; flex-wrap: wrap; gap: 12px;
+}
+.logo-wrap { display: flex; flex-direction: column; }
+.logo-title {
+  font-family: var(--font-display); font-size: 1.5rem;
+  font-weight: 700; letter-spacing: -0.5px;
+  background: var(--grad); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.logo-sub { font-size: 0.72rem; color: var(--text2); letter-spacing: 2px; text-transform: uppercase; margin-top: 2px; }
+
+.header-right { display: flex; align-items: center; gap: 8px; }
+.theme-btn {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--text); font-size: 1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-btn:hover { border-color: var(--violet); }
+.pro-badge {
+  background: var(--grad); color: white;
+  font-size: 0.65rem; font-weight: 800; letter-spacing: 2px;
+  padding: 4px 10px; border-radius: 6px; text-transform: uppercase; display: none;
+}
+.pro-badge.visible { display: inline-block; }
+.btn-upgrade {
+  padding: 8px 16px; background: var(--grad);
+  border: none; border-radius: 8px; color: white;
+  font-family: var(--font); font-size: 0.75rem; font-weight: 800;
+  cursor: pointer; transition: all 0.2s; box-shadow: var(--shadow-violet);
+}
+.btn-upgrade:hover { transform: translateY(-1px); opacity: 0.9; }
+
+/* HERO */
+.hero { text-align: center; padding: 40px 0 36px; }
+.hero-title {
+  font-family: var(--font-display); font-size: clamp(2.4rem, 7vw, 3.8rem);
+  font-weight: 700; line-height: 1.1; margin-bottom: 12px; letter-spacing: -1px;
+}
+.hero-title span {
+  background: var(--grad); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-sub { color: var(--text2); font-size: 1rem; line-height: 1.7; margin-bottom: 32px; }
+
+/* DATE INPUT */
+.date-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  backdrop-filter: blur(20px);
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.date-label {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text2); margin-bottom: 12px; display: block;
+}
+.date-input-wrap { position: relative; }
+.date-input {
+  width: 100%; padding: 16px 20px;
+  background: var(--surface2); border: 1.5px solid var(--border2);
+  border-radius: var(--radius); color: var(--text);
+  font-family: var(--font); font-size: 1.1rem; font-weight: 700;
+  outline: none; transition: all 0.3s; cursor: pointer;
+  -webkit-appearance: none;
+}
+.date-input:focus { border-color: var(--violet); box-shadow: 0 0 0 3px rgba(139,92,246,0.15); }
+.date-input::-webkit-calendar-picker-indicator { opacity: 0.5; cursor: pointer; filter: invert(1); }
+
+.btn-calculate {
+  width: 100%; padding: 18px;
+  background: var(--grad);
+  border: none; border-radius: var(--radius);
+  color: white; font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 600; letter-spacing: 0.5px;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: var(--shadow-violet);
+  margin-top: 16px;
+}
+.btn-calculate:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(139,92,246,0.5); }
+.btn-calculate:active { transform: translateY(0); }
+
+/* LOADING */
+.loading-bar {
+  height: 3px; background: var(--grad);
+  border-radius: 2px; width: 0%;
+  transition: width 0.6s ease;
+  margin-top: 12px; display: none;
+}
+
+/* RESULTS */
+.results { display: none; }
+.results.visible { display: block; animation: fadeUp 0.5s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* BIRTHDAY BANNER */
+.birthday-banner {
+  background: var(--grad);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  display: none;
+  animation: pulse 1s ease infinite alternate;
+}
+@keyframes pulse { from { box-shadow: 0 0 20px rgba(139,92,246,0.4); } to { box-shadow: 0 0 40px rgba(236,72,153,0.6); } }
+.birthday-banner.visible { display: block; }
+.birthday-text { font-size: 1.2rem; font-weight: 800; color: white; }
+
+/* MAIN STATS */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+@media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr; } }
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.stat-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--grad); opacity: 0;
+  transition: opacity 0.3s;
+}
+.stat-card:hover { border-color: var(--violet); transform: translateY(-2px); box-shadow: var(--shadow-violet); }
+.stat-card:hover::before { opacity: 0.04; }
+
+.stat-icon { font-size: 1.4rem; margin-bottom: 8px; display: block; }
+.stat-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--text2); margin-bottom: 6px; }
+.stat-value {
+  font-family: var(--font-display); font-size: 2.2rem;
+  font-weight: 700; line-height: 1;
+  background: var(--grad); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; background-clip: text;
+  transition: all 0.3s;
+}
+.stat-value.counting { animation: countUp 0.4s ease; }
+@keyframes countUp { from { transform: scale(1.1); opacity: 0.6; } to { transform: scale(1); opacity: 1; } }
+.stat-sub { font-size: 0.72rem; color: var(--text3); margin-top: 4px; }
+
+/* WIDE CARD */
+.wide-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin-bottom: 12px;
+  backdrop-filter: blur(20px);
+}
+.wide-card-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.wide-card-label { font-size: 0.78rem; color: var(--text2); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.wide-card-value { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--text); }
+.wide-card-value span { color: var(--violet2); }
+
+/* LIVE TIMER */
+.timer-card {
+  background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(236,72,153,0.1));
+  border: 1px solid rgba(139,92,246,0.3);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+  backdrop-filter: blur(20px);
+}
+.timer-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--violet2); margin-bottom: 12px; }
+.timer-value {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 5vw, 2.8rem);
+  font-weight: 700; color: var(--text); letter-spacing: -1px;
+  line-height: 1.2;
+}
+.timer-value span { color: var(--violet2); }
+.timer-sub { font-size: 0.75rem; color: var(--text2); margin-top: 8px; }
+
+/* SECTION HEADERS */
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin: 24px 0 14px;
+}
+.section-title { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--text); }
+.section-badge {
+  font-size: 0.6rem; font-weight: 800; letter-spacing: 1px;
+  background: var(--grad); color: white;
+  padding: 3px 8px; border-radius: 4px; text-transform: uppercase;
+}
+.section-badge.pro {
+  background: transparent;
+  border: 1px solid var(--violet);
+  color: var(--violet2);
+}
+
+/* FUN FACTS */
+.facts-grid { display: flex; flex-direction: column; gap: 8px; }
+.fact-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  backdrop-filter: blur(20px);
+}
+.fact-left { display: flex; align-items: center; gap: 10px; }
+.fact-icon { font-size: 1.2rem; }
+.fact-name { font-size: 0.82rem; color: var(--text2); font-weight: 600; }
+.fact-value { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--violet2); white-space: nowrap; }
+
+/* PRO LOCK */
+.pro-lock-wrap { position: relative; border-radius: var(--radius); overflow: hidden; }
+.pro-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(4px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  border-radius: var(--radius); cursor: pointer; z-index: 10;
+}
+[data-theme="light"] .pro-overlay { background: rgba(248,247,255,0.88); }
+.pro-overlay.hidden { display: none; }
+.pro-overlay-text { font-size: 0.82rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.pro-overlay-btn {
+  padding: 9px 20px; background: var(--grad);
+  border: none; border-radius: 8px; color: white; font-family: var(--font);
+  font-size: 0.78rem; font-weight: 800; cursor: pointer;
+}
+
+/* COMPARE */
+.compare-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  backdrop-filter: blur(20px);
+  margin-bottom: 16px;
+}
+.compare-result {
+  margin-top: 16px; padding: 16px;
+  background: var(--surface2); border-radius: var(--radius);
+  text-align: center; display: none;
+}
+.compare-result.visible { display: block; }
+.compare-diff {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 700;
+  background: var(--grad2); -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.compare-desc { font-size: 0.82rem; color: var(--text2); margin-top: 6px; }
+
+/* SHARE CARD */
+.share-section { margin-top: 8px; }
+.btn-share {
+  width: 100%; padding: 16px;
+  background: var(--grad);
+  border: none; border-radius: var(--radius);
+  color: white; font-family: var(--font);
+  font-size: 0.95rem; font-weight: 800;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: var(--shadow-violet);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-share:hover { transform: translateY(-2px); opacity: 0.9; }
+
+/* SHARE PREVIEW */
+#share-canvas-wrap {
+  background: linear-gradient(135deg, #1a0a2e, #0d1b3e);
+  border-radius: var(--radius); padding: 28px;
+  margin-top: 16px; text-align: center; display: none;
+  border: 1px solid rgba(139,92,246,0.3);
+}
+.share-preview-title { font-size: 0.7rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
+.share-card {
+  background: linear-gradient(135deg, #1e0a3c 0%, #0d1b3e 50%, #1a0a2e 100%);
+  border-radius: 16px; padding: 28px 24px;
+  border: 1px solid rgba(139,92,246,0.4);
+  position: relative; overflow: hidden;
+}
+.share-card::before {
+  content: ''; position: absolute;
+  top: -50px; right: -50px; width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(139,92,246,0.3), transparent 70%);
+}
+.share-card-name { font-size: 0.8rem; color: rgba(255,255,255,0.5); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.share-card-age { font-family: var(--font-display); font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 4px; }
+.share-card-sub { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+.share-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.share-stat { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 12px; text-align: center; }
+.share-stat-val { font-family: var(--font-display); font-size: 1.2rem; color: #a78bfa; font-weight: 700; }
+.share-stat-label { font-size: 0.62rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.share-card-footer { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 1px; }
+.btn-download-share {
+  margin-top: 14px; padding: 12px 24px;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  border: none; border-radius: 10px; color: white;
+  font-family: var(--font); font-size: 0.82rem; font-weight: 800;
+  cursor: pointer; transition: all 0.2s;
+}
+.btn-download-share:hover { transform: translateY(-2px); }
+
+/* MODAL */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(12px); z-index: 10000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; animation: fadeIn 0.2s ease;
+}
+.modal-overlay.hidden { display: none; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.modal-box {
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--radius-lg); padding: 40px 32px;
+  max-width: 420px; width: 100%; text-align: center;
+  box-shadow: var(--shadow-lg); position: relative; overflow: hidden;
+}
+.modal-box::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--grad);
+}
+.modal-glow {
+  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(139,92,246,0.15), transparent 70%);
+  pointer-events: none;
+}
+.modal-icon { font-size: 2.5rem; margin-bottom: 12px; position: relative; }
+.modal-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; position: relative; }
+.modal-desc { font-size: 0.88rem; color: var(--text2); line-height: 1.7; margin-bottom: 20px; position: relative; }
+.modal-price { font-family: var(--font-display); font-size: 3rem; font-weight: 700; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; margin-bottom: 4px; position: relative; }
+.modal-price-sub { font-size: 0.72rem; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+.modal-features { text-align: left; background: var(--surface2); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; position: relative; }
+.modal-feature { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 0.83rem; color: var(--text2); border-bottom: 1px solid var(--border); }
+.modal-feature:last-child { border-bottom: none; }
+.modal-feature .chk { color: var(--violet2); }
+.btn-buy {
+  width: 100%; padding: 16px; background: var(--grad);
+  border: none; border-radius: var(--radius); color: white; font-family: var(--font);
+  font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
+  margin-bottom: 12px; box-shadow: var(--shadow-violet); position: relative;
+}
+.btn-buy:hover { transform: translateY(-2px); opacity: 0.9; }
+.unlock-row { display: flex; gap: 8px; margin-bottom: 12px; position: relative; }
+.unlock-input {
+  flex: 1; padding: 11px 14px; background: var(--surface2);
+  border: 1.5px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-family: var(--font); font-size: 0.82rem;
+  letter-spacing: 2px; text-align: center; text-transform: uppercase; outline: none;
+}
+.unlock-input:focus { border-color: var(--violet); }
+.btn-redeem {
+  padding: 11px 14px; background: var(--surface2); border: 1.5px solid var(--border);
+  border-radius: var(--radius); color: var(--text2); font-family: var(--font);
+  font-size: 0.78rem; cursor: pointer; transition: all 0.2s;
+}
+.btn-redeem:hover { border-color: var(--violet); color: var(--violet2); }
+.modal-close { background: none; border: none; color: var(--text3); font-family: var(--font); font-size: 0.78rem; cursor: pointer; text-decoration: underline; padding: 8px; position: relative; }
+
+/* SHARE MODAL */
+.share-modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+.share-btn { padding: 14px 10px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface2); color: var(--text2); font-family: var(--font); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; flex-direction: column; align-items: center; gap: 6px; text-decoration: none; }
+.share-btn:hover { border-color: var(--violet); color: var(--violet2); }
+.share-icon { font-size: 1.4rem; }
+
+/* CONFETTI */
+.confetti-piece {
+  position: fixed; width: 10px; height: 10px;
+  border-radius: 2px; z-index: 9999;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* TOAST */
+#toast-container { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 99999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.toast { background: var(--bg2); border: 1px solid var(--border2); border-radius: 12px; padding: 12px 20px; font-size: 0.85rem; color: var(--text); box-shadow: var(--shadow-lg); animation: toastIn 0.3s ease; white-space: nowrap; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Progress bar */
+.next-bday-bar { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; margin-top: 8px; }
+.next-bday-fill { height: 100%; background: var(--grad); border-radius: 3px; transition: width 1s ease; }
+</style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div id="toast-container"></div>
+
+<!-- PREMIUM MODAL -->
+<div class="modal-overlay hidden" id="premium-modal">
+  <div class="modal-box">
+    <div class="modal-glow"></div>
+    <div class="modal-icon">✨</div>
+    <div class="modal-title">Unlock Pro</div>
+    <div class="modal-desc">Get the full AgeCalculator Pro experience — share your results, compare ages and unlock all fun facts.</div>
+    <div class="modal-price">$2.99</div>
+    <div class="modal-price-sub">ONE-TIME — YOURS FOREVER</div>
+    <div class="modal-features">
+      <div class="modal-feature"><span class="chk">✓</span> Share your age as a beautiful card</div>
+      <div class="modal-feature"><span class="chk">✓</span> Compare ages between two people</div>
+      <div class="modal-feature"><span class="chk">✓</span> All fun facts unlocked</div>
+      <div class="modal-feature"><span class="chk">✓</span> Download shareable image</div>
+    </div>
+    <div class="unlock-row">
+      <input class="unlock-input" type="text" id="unlock-input" placeholder="HAVE A CODE?" maxlength="20">
+      <button class="btn-redeem" onclick="redeemCode()">Redeem</button>
+    </div>
+    <button class="btn-buy" onclick="handleUpgrade()">⚡ Unlock Pro — $2.99</button>
+    <br>
+    <button class="modal-close" onclick="closeModal('premium-modal')">Maybe later</button>
+  </div>
+</div>
+
+<!-- APP SHARE MODAL -->
+<div class="modal-overlay hidden" id="share-app-modal">
+  <div class="modal-box">
+    <div class="modal-icon">🎂</div>
+    <div class="modal-title">Share AgeCalculator</div>
+    <div class="modal-desc">Show your friends how old you REALLY are! 😄</div>
+    <div class="share-modal-grid">
+      <a class="share-btn" id="share-whatsapp" href="#" target="_blank"><span class="share-icon">💬</span>WhatsApp</a>
+      <a class="share-btn" id="share-twitter" href="#" target="_blank"><span class="share-icon">🐦</span>Twitter / X</a>
+      <a class="share-btn" id="share-reddit" href="#" target="_blank"><span class="share-icon">🤖</span>Reddit</a>
+      <button class="share-btn" onclick="copyAppLink()"><span class="share-icon">🔗</span>Copy Link</button>
+    </div>
+    <button class="modal-close" onclick="closeModal('share-app-modal')">Close</button>
+  </div>
+</div>
+
+<div class="app">
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-title">AgeCalculator Pro</div>
+      <div class="logo-sub">Discover your life in numbers</div>
+    </div>
+    <div class="header-right">
+      <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+      <span class="pro-badge" id="pro-badge">PRO ✓</span>
+      <button class="btn-upgrade" id="upgrade-btn" onclick="openPremiumModal()">⚡ Pro — $2.99</button>
+    </div>
+  </header>
+
+  <div class="hero">
+    <h1 class="hero-title">How old are<br><span>you really?</span></h1>
+    <p class="hero-sub">Discover your exact age down to the second — plus fun facts, birthday countdown and more.</p>
+  </div>
+
+  <!-- DATE INPUT -->
+  <div class="date-card">
+    <label class="date-label">📅 Your Date of Birth</label>
+    <input type="date" class="date-input" id="dob-input" onchange="calculate()" max="">
+    <div class="loading-bar" id="loading-bar"></div>
+    <button class="btn-calculate" onclick="calculate()">✨ Calculate My Age</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+
+    <!-- Birthday banner -->
+    <div class="birthday-banner" id="birthday-banner">
+      <div class="birthday-text">🎉 Happy Birthday! Today is your special day! 🎂</div>
+    </div>
+
+    <!-- MAIN STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-icon">🎂</span>
+        <div class="stat-label">Years</div>
+        <div class="stat-value" id="stat-years">0</div>
+        <div class="stat-sub">years old</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">📅</span>
+        <div class="stat-label">Months</div>
+        <div class="stat-value" id="stat-months">0</div>
+        <div class="stat-sub">total months</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">☀️</span>
+        <div class="stat-label">Days</div>
+        <div class="stat-value" id="stat-days">0</div>
+        <div class="stat-sub">total days lived</div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-icon">⏰</span>
+        <div class="stat-label">Hours</div>
+        <div class="stat-value" id="stat-hours">0</div>
+        <div class="stat-sub">total hours</div>
+      </div>
+    </div>
+
+    <!-- INFO CARDS -->
+    <div class="wide-card">
+      <div class="wide-card-row">
+        <div class="wide-card-label">🌍 Born on</div>
+        <div class="wide-card-value" id="born-day">—</div>
+      </div>
+    </div>
+
+    <div class="wide-card">
+      <div class="wide-card-row">
+        <div class="wide-card-label">🎁 Next birthday in</div>
+        <div class="wide-card-value"><span id="next-bday">—</span> days</div>
+      </div>
+      <div class="next-bday-bar"><div class="next-bday-fill" id="bday-progress" style="width:0%"></div></div>
+    </div>
+
+    <!-- LIVE TIMER -->
+    <div class="timer-card">
+      <div class="timer-label">⏱ Live Age Timer</div>
+      <div class="timer-value" id="live-timer">0 years, 0 days, 00:00:00</div>
+      <div class="timer-sub">Updates every second in real time</div>
+    </div>
+
+    <!-- FUN FACTS FREE -->
+    <div class="section-header">
+      <div class="section-title">🎉 Fun Facts</div>
+      <div class="section-badge">FREE</div>
+    </div>
+    <div class="facts-grid">
+      <div class="fact-item">
+        <div class="fact-left"><span class="fact-icon">💓</span><span class="fact-name">Heartbeats (est.)</span></div>
+        <div class="fact-value" id="fact-heartbeats">—</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-left"><span class="fact-icon">😴</span><span class="fact-name">Hours slept (est.)</span></div>
+        <div class="fact-value" id="fact-sleep">—</div>
+      </div>
+      <div class="fact-item">
+        <div class="fact-left"><span class="fact-icon">🎂</span><span class="fact-name">Birthdays celebrated</span></div>
+        <div class="fact-value" id="fact-birthdays">—</div>
+      </div>
+    </div>
+
+    <!-- FUN FACTS PRO -->
+    <div class="section-header">
+      <div class="section-title">💎 More Fun Facts</div>
+      <div class="section-badge pro">PRO</div>
+    </div>
+    <div class="pro-lock-wrap">
+      <div class="facts-grid" id="pro-facts-content">
+        <div class="fact-item">
+          <div class="fact-left"><span class="fact-icon">🍽️</span><span class="fact-name">Meals eaten (est.)</span></div>
+          <div class="fact-value" id="fact-meals">—</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-left"><span class="fact-icon">👣</span><span class="fact-name">Steps taken (est.)</span></div>
+          <div class="fact-value" id="fact-steps">—</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-left"><span class="fact-icon">😂</span><span class="fact-name">Times laughed (est.)</span></div>
+          <div class="fact-value" id="fact-laughs">—</div>
+        </div>
+        <div class="fact-item">
+          <div class="fact-left"><span class="fact-icon">🌙</span><span class="fact-name">Full moons seen</span></div>
+          <div class="fact-value" id="fact-moons">—</div>
+        </div>
+      </div>
+      <div class="pro-overlay" id="pro-facts-lock" onclick="openPremiumModal()">
+        <div style="font-size:2rem">🔒</div>
+        <div class="pro-overlay-text">⚡ Pro Feature</div>
+        <button class="pro-overlay-btn">Unlock Pro — $2.99</button>
+      </div>
+    </div>
+
+    <!-- COMPARE AGES -->
+    <div class="section-header">
+      <div class="section-title">⚖️ Compare Ages</div>
+      <div class="section-badge pro">PRO</div>
+    </div>
+    <div class="pro-lock-wrap">
+      <div class="compare-card" id="compare-content">
+        <label class="date-label">📅 Compare with another date</label>
+        <input type="date" class="date-input" id="compare-input" onchange="compareAges()" max="">
+        <div class="compare-result" id="compare-result">
+          <div class="compare-diff" id="compare-diff">—</div>
+          <div class="compare-desc" id="compare-desc">—</div>
+        </div>
+      </div>
+      <div class="pro-overlay" id="pro-compare-lock" onclick="openPremiumModal()">
+        <div style="font-size:2rem">🔒</div>
+        <div class="pro-overlay-text">⚡ Pro Feature</div>
+        <button class="pro-overlay-btn">Unlock Pro — $2.99</button>
+      </div>
+    </div>
+
+    <!-- SHARE RESULT -->
+    <div class="section-header">
+      <div class="section-title">📤 Share Your Age</div>
+      <div class="section-badge pro">PRO</div>
+    </div>
+    <div class="pro-lock-wrap">
+      <div class="share-section" id="share-content">
+        <button class="btn-share" onclick="generateShareCard()">
+          🎉 Generate Share Card
+        </button>
+        <div id="share-canvas-wrap">
+          <div class="share-preview-title">YOUR SHAREABLE CARD</div>
+          <div class="share-card" id="share-card-preview">
+            <div class="share-card-name">MY AGE IN NUMBERS</div>
+            <div class="share-card-age" id="sc-age">25</div>
+            <div class="share-card-sub" id="sc-sub">years, 3 months, 14 days</div>
+            <div class="share-card-stats">
+              <div class="share-stat"><div class="share-stat-val" id="sc-days">9,125</div><div class="share-stat-label">Days Lived</div></div>
+              <div class="share-stat"><div class="share-stat-val" id="sc-hours">219,000</div><div class="share-stat-label">Hours</div></div>
+              <div class="share-stat"><div class="share-stat-val" id="sc-heartbeats">1B+</div><div class="share-stat-label">Heartbeats</div></div>
+              <div class="share-stat"><div class="share-stat-val" id="sc-bday">—</div><div class="share-stat-label">Days to B-day</div></div>
+            </div>
+            <div class="share-card-footer">agecalculator.pro — Discover your life in numbers</div>
+          </div>
+          <button class="btn-download-share" onclick="downloadShareCard()">⬇ Save as Image</button>
+        </div>
+      </div>
+      <div class="pro-overlay" id="pro-share-lock" onclick="openPremiumModal()">
+        <div style="font-size:2rem">🔒</div>
+        <div class="pro-overlay-text">⚡ Pro Feature</div>
+        <button class="pro-overlay-btn">Unlock Pro — $2.99</button>
+      </div>
+    </div>
+
+    <!-- APP SHARE -->
+    <div style="margin-top:24px">
+      <button class="btn-share" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text)" onclick="openShareAppModal()">
+        📤 Share this app with friends
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+// CONFIG
+// ============================================================
+const OWNER_CODE = 'AGECALC2024';
+const GUMROAD_LINK = 'https://gumroad.com/l/agecalcpro';
+const APP_URL = 'https://sheroo6211.github.io/AgeCalculatorPro';
+const APP_MSG = 'Find out your EXACT age in years, months, days, hours and minutes! 🎂 Free age calculator — link below:';
+
+// ============================================================
+// STATE
+// ============================================================
+let state = { isPremium: false, theme: 'dark' };
+let timerInterval = null;
+let dobDate = null;
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('acp_state');
+    if (s) Object.assign(state, JSON.parse(s));
+  } catch(e) {}
+}
+function saveState() { localStorage.setItem('acp_state', JSON.stringify(state)); }
+
+// ============================================================
+// THEME
+// ============================================================
+function toggleTheme() {
+  state.theme = state.theme === 'dark' ? 'light' : 'dark';
+  applyTheme();
+  saveState();
+}
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', state.theme);
+  document.getElementById('theme-btn').textContent = state.theme === 'dark' ? '🌙' : '☀️';
+}
+
+// ============================================================
+// CALCULATE
+// ============================================================
+function calculate() {
+  const val = document.getElementById('dob-input').value;
+  if (!val) return;
+
+  dobDate = new Date(val);
+  const now = new Date();
+
+  if (dobDate > now) { showToast('Date of birth cannot be in the future!'); return; }
+
+  // Loading animation
+  const bar = document.getElementById('loading-bar');
+  bar.style.display = 'block';
+  bar.style.width = '0%';
+  setTimeout(() => bar.style.width = '100%', 50);
+
+  setTimeout(() => {
+    bar.style.display = 'none';
+    showResults();
+  }, 700);
+}
+
+function showResults() {
+  const now = new Date();
+
+  // Years, months, days calculation
+  let years = now.getFullYear() - dobDate.getFullYear();
+  let months = now.getMonth() - dobDate.getMonth();
+  let days = now.getDate() - dobDate.getDate();
+
+  if (days < 0) {
+    months--;
+    const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+    days += prevMonth.getDate();
+  }
+  if (months < 0) { years--; months += 12; }
+
+  const totalDays = Math.floor((now - dobDate) / (1000 * 60 * 60 * 24));
+  const totalMonths = years * 12 + months;
+  const totalHours = Math.floor(totalDays * 24);
+  const totalMinutes = totalHours * 60;
+
+  // Animate numbers
+  animateNumber('stat-years', years);
+  animateNumber('stat-months', totalMonths);
+  animateNumber('stat-days', totalDays);
+  animateNumber('stat-hours', totalHours);
+
+  // Born day
+  const days_of_week = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const months_of_year = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('born-day').textContent = `${days_of_week[dobDate.getDay()]}, ${months_of_year[dobDate.getMonth()]} ${dobDate.getDate()}, ${dobDate.getFullYear()}`;
+
+  // Next birthday
+  let nextBday = new Date(now.getFullYear(), dobDate.getMonth(), dobDate.getDate());
+  if (nextBday <= now) nextBday.setFullYear(now.getFullYear() + 1);
+  const daysToNextBday = Math.ceil((nextBday - now) / (1000 * 60 * 60 * 24));
+  document.getElementById('next-bday').textContent = daysToNextBday === 0 ? '🎉 Today!' : daysToNextBday.toLocaleString();
+
+  // Birthday progress bar
+  const daysSinceLastBday = 365 - daysToNextBday;
+  const progress = (daysSinceLastBday / 365) * 100;
+  document.getElementById('bday-progress').style.width = progress + '%';
+
+  // Birthday banner
+  const isBirthday = now.getMonth() === dobDate.getMonth() && now.getDate() === dobDate.getDate();
+  if (isBirthday) {
+    document.getElementById('birthday-banner').classList.add('visible');
+    launchConfetti();
+  }
+
+  // Fun facts (free)
+  document.getElementById('fact-heartbeats').textContent = formatBig(totalDays * 24 * 60 * 70);
+  document.getElementById('fact-sleep').textContent = formatBig(totalDays * 8);
+  document.getElementById('fact-birthdays').textContent = years;
+
+  // Fun facts (pro)
+  document.getElementById('fact-meals').textContent = formatBig(totalDays * 3);
+  document.getElementById('fact-steps').textContent = formatBig(totalDays * 8000);
+  document.getElementById('fact-laughs').textContent = formatBig(totalDays * 15);
+  document.getElementById('fact-moons').textContent = Math.floor(totalDays / 29.5);
+
+  // Share card
+  document.getElementById('sc-age').textContent = years;
+  document.getElementById('sc-sub').textContent = `years, ${months} months, ${days} days`;
+  document.getElementById('sc-days').textContent = totalDays.toLocaleString();
+  document.getElementById('sc-hours').textContent = formatBig(totalHours);
+  document.getElementById('sc-heartbeats').textContent = formatBig(totalDays * 24 * 60 * 70);
+  document.getElementById('sc-bday').textContent = daysToNextBday === 0 ? 'TODAY! 🎉' : daysToNextBday;
+
+  // Start live timer
+  if (timerInterval) clearInterval(timerInterval);
+  updateLiveTimer();
+  timerInterval = setInterval(updateLiveTimer, 1000);
+
+  // Show results
+  const resultsEl = document.getElementById('results');
+  resultsEl.style.display = 'block';
+  resultsEl.classList.add('visible');
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function updateLiveTimer() {
+  if (!dobDate) return;
+  const now = new Date();
+  const diff = now - dobDate;
+
+  const totalSecs = Math.floor(diff / 1000);
+  const secs = totalSecs % 60;
+  const totalMins = Math.floor(totalSecs / 60);
+  const mins = totalMins % 60;
+  const totalHrs = Math.floor(totalMins / 60);
+  const hrs = totalHrs % 24;
+  const totalDays = Math.floor(totalHrs / 24);
+  const years = Math.floor(totalDays / 365.25);
+  const remainDays = Math.floor(totalDays - years * 365.25);
+
+  document.getElementById('live-timer').innerHTML =
+    `<span>${years}</span> yrs, <span>${remainDays}</span> days, <span>${String(hrs).padStart(2,'0')}:${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</span>`;
+}
+
+// ============================================================
+// COMPARE
+// ============================================================
+function compareAges() {
+  const val = document.getElementById('compare-input').value;
+  if (!val || !dobDate) return;
+
+  const compareDate = new Date(val);
+  const now = new Date();
+
+  const ageA = Math.floor((now - dobDate) / (1000 * 60 * 60 * 24 * 365.25));
+  const ageB = Math.floor((now - compareDate) / (1000 * 60 * 60 * 24 * 365.25));
+  const diffDays = Math.abs(Math.floor((dobDate - compareDate) / (1000 * 60 * 60 * 24)));
+  const diffYears = Math.floor(diffDays / 365.25);
+  const diffMonths = Math.floor((diffDays % 365.25) / 30);
+
+  document.getElementById('compare-diff').textContent = `${diffYears} years, ${diffMonths} months apart`;
+  document.getElementById('compare-desc').textContent =
+    ageA === ageB ? "You're the same age! 🎉" :
+    ageA > ageB ? `You are ${ageA - ageB} years older` : `You are ${ageB - ageA} years younger`;
+
+  document.getElementById('compare-result').classList.add('visible');
+}
+
+// ============================================================
+// SHARE CARD
+// ============================================================
+function generateShareCard() {
+  document.getElementById('share-canvas-wrap').style.display = 'block';
+  showToast('Share card generated! 🎉');
+}
+
+function downloadShareCard() {
+  showToast('Right-click the card and save as image! 📸');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function animateNumber(id, target) {
+  const el = document.getElementById(id);
+  const start = 0;
+  const duration = 800;
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(eased * target);
+    el.textContent = current.toLocaleString();
+    el.classList.add('counting');
+    if (progress < 1) requestAnimationFrame(update);
+    else { el.textContent = target.toLocaleString(); }
+  }
+  requestAnimationFrame(update);
+}
+
+function formatBig(n) {
+  if (n >= 1000000000) return (n / 1000000000).toFixed(1) + 'B';
+  if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+  if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+  return Math.floor(n).toLocaleString();
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti() {
+  const colors = ['#8b5cf6','#ec4899','#06b6d4','#f59e0b','#10b981','#f472b6'];
+  for (let i = 0; i < 80; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.width = (Math.random() * 10 + 6) + 'px';
+      c.style.height = (Math.random() * 10 + 6) + 'px';
+      c.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 40);
+  }
+}
+
+// ============================================================
+// PREMIUM
+// ============================================================
+function openPremiumModal() { document.getElementById('premium-modal').classList.remove('hidden'); }
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+function handleUpgrade() { window.open(GUMROAD_LINK, '_blank'); showToast('Complete payment then enter your code!'); }
+
+function redeemCode() {
+  const code = document.getElementById('unlock-input').value.trim().toUpperCase();
+  if (code === OWNER_CODE || code.startsWith('ACP-')) {
+    state.isPremium = true; saveState();
+    closeModal('premium-modal');
+    unlockPro();
+    showToast('🎉 Pro unlocked! All features available.');
+  } else {
+    showToast('Invalid code — please check and try again.');
+  }
+}
+
+function unlockPro() {
+  document.getElementById('pro-badge').classList.add('visible');
+  document.getElementById('upgrade-btn').style.display = 'none';
+  ['pro-facts-lock', 'pro-compare-lock', 'pro-share-lock'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('hidden'); el.style.display = 'none'; }
+  });
+}
+
+// ============================================================
+// APP SHARE
+// ============================================================
+function openShareAppModal() {
+  document.getElementById('share-whatsapp').href = `https://wa.me/?text=${encodeURIComponent(APP_MSG + ' ' + APP_URL)}`;
+  document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(APP_MSG)}&url=${encodeURIComponent(APP_URL)}`;
+  document.getElementById('share-reddit').href = `https://reddit.com/submit?url=${encodeURIComponent(APP_URL)}&title=${encodeURIComponent('Find your exact age in years, months, days, hours and minutes — free!')}`;
+  document.getElementById('share-app-modal').classList.remove('hidden');
+}
+function copyAppLink() { navigator.clipboard.writeText(APP_URL).then(() => { showToast('Link copied! 🔗'); closeModal('share-app-modal'); }); }
+
+// ============================================================
+// TOAST
+// ============================================================
+function showToast(msg) {
+  const c = document.getElementById('toast-container');
+  const t = document.createElement('div'); t.className = 'toast'; t.textContent = msg;
+  c.appendChild(t); setTimeout(() => t.remove(), 3000);
+}
+
+// ============================================================
+// INIT
+// ============================================================
+loadState();
+applyTheme();
+
+// Set max date to today
+const today = new Date().toISOString().split('T')[0];
+document.getElementById('dob-input').max = today;
+document.getElementById('compare-input').max = today;
+
+if (state.isPremium) unlockPro();
+else {
+  ['pro-facts-lock', 'pro-compare-lock', 'pro-share-lock'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.classList.remove('hidden'); el.style.display = 'flex'; }
+  });
+}
+</script>
+</body>
+</html>
